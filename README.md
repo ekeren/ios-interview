@@ -5,10 +5,10 @@ This mission, should you choose to accept it, is to build an application that fe
 After selecting a condition, the second screen appears and allows to test the __string condition__
 
 __Main Screen__: 
-- A table view with the content object from server/conditions
+- A table view with the content object from 54.173.94.129/conditions
 - The screen should show only condition names
 - Once a user clicks on a condition, the next screen should appear 
-- get `http://server/conditions`  will return : 
+- get `http://54.173.94.129/conditions`  will return : 
 ```javascript 
 [ 
   {
@@ -21,7 +21,7 @@ __Main Screen__:
 __Second  Screen__:
 - The screen should show 2 text fields, a button and the result label
 - When the button is clicked, the condition is tested with the two arguments from the text fields, and the result of the test appears in the result label
-- The condition is loaded via `http://server/conditions/:id`:
+- The condition is loaded via `http://54.173.94.129/conditions/:id`:
 ```javascript 
 { 
   name:”condition name”, 
