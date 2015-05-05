@@ -1,8 +1,8 @@
 # ios-interview
 The interview question for Rollout.io's IOS developer position
 
-This mission, should you choose to accept it, is to build an application that fetches condition object from REST api and display it in a Table view. 
-After I select the condition, the second screen appears and allows me to test my condition 
+This mission, should you choose to accept it, is to build an application that fetches __string condition__ object from REST api and display it in a Table view. 
+After I select the condition, the second screen appears and allows me to test my __string condition__
 
 __Main Screen__: 
 - A tableView with the content object from server/conditions
@@ -19,31 +19,31 @@ __Main Screen__:
 ```
 
 __Second  Screen__:
-- The screen should show a text field and a result of the condition 
+- The screen should show 2 text fields and a result of the condition 
 - The condition is loaded via `http://server/conditions/:id`:
 ```javascript 
 { 
   name:”condition name”, 
   _id:"unique id”, 
   condition: <ConditionData>, 
-  arguments: <number> 
 } 
 ```
-- The input fields can only be text fields (to reduce complexity) 
-- The amount of arguments is maximum 3 (to reduce complexity in UI)
+- The input fields are 2 text fields (The condition is only for NSString - to reduce complexity) 
 
 __Notes__:
 - Don’t worry about UI at all, it doesn’t have to look good
 - The condition parser design is important
  - It should easily support adding new operators
 
+
 __Schemas__:
+It is important to understand the ConditionData Schema
 
 ConditionData schema:
 ```javascript
 { 
-  op: “eq” | “and” | “or” | “ne” | “startsWith” ,
-  args: [ <ConditionData | Value > ] 
+  op: “eq” | “and” | “or” | “ne” | “startsWith” , // operators that are allow
+  args: [ <ConditionData | Value | Argument > ] // The arguments of the operators, it can be a value and argument or another condition (for example when the op is and)
 }
 ```
       
@@ -51,24 +51,31 @@ ConditionData schema:
 Value Schema:
 ```javascript
 {
-  type: “arg”|”string”,
+  type: ”string”,
   date: “data"
- }
+}
+```
+
+Argument Schema:
+```javascript
+{
+  type: ”argument”,
+  argumentNumber: 1|2
+}
 ```
 
 
-For example for this condition: 	`arg1 equals  “rollout.io”`
+For example for this condition: ```equals(arg1, “rollout.io”)```
 
-The fetched model will look like this:
+The model will look like this:
 ```javascript
 { 
   name:”first example - simple eq operator”, 
  _id:”1”, 
   condition: {
     op: “eq”, 
-    args:  [{ type: “arg”, value:1}, {type: “string”, value: “rollout.io”}]
+    args:  [{ type: “argument”, argumentNumber:1}, {type: “string”, value: “rollout.io”}]
   }
-  arguments: 1 
 }
 ``` 
  
@@ -83,19 +90,17 @@ The fetched model will look like this:
 		op: “and”, 
 		args: [{
 				op: “ne”,
-				args: [{ type: “arg”, value:1}, {type: “string”, value: “ rollout.io”}]
+				args: [{ type: “argument”, argumentNumber:1}, {type: “string”, value: “rollout.io”}]
 			},{
 				op: “startsWith”,
-				args: [{ type: “arg”, value:1}, {type: “string”, value: “ro”}]
+				args: [{ type: “argument”, argumentNumber:1}, {type: “string”, value: “ro”}]
 			}
 		],
 	}
-	arguments: 1 
 }
 ``` 
  
-For example for this condition 
-arg1 equals “rollout.io” &&  arg2 equals “control your production” 
+For example for this condition ```arg1 equals “rollout.io” &&  arg2 equals “control your production”``` 
 The fetched model will look like this:
 ```javascript
 { 
@@ -105,13 +110,12 @@ The fetched model will look like this:
     op: “and”, 
     args: [{
       op: “eq”,
-      args: [{ type: “arg”, value:1}, {type: “string”, value: “rollout.io”}]
+      args: [{ type: “argument”, argumentNumber:1}, {type: “string”, value: “rollout.io”}]
     },{
       op: “eq”,
-      args: [{ type: “arg”, value:2}, {type: “string”, value: “control your production”}]
+      args: [{ type: “argument”, argumentNumber:2}, {type: “string”, value: “control your production”}]
     }],
   }
-  arguments: 2
 }
 ```
  
