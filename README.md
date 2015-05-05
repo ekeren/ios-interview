@@ -34,6 +34,7 @@ __Notes__:
 - Don’t worry about UI at all, it doesn’t have to look good
 - The condition parser design is important
  - It should easily support adding new operators
+- It is very important to understand the schemas here, and how condition is constructed, check out the examples 
 
 
 __Schemas__:
@@ -42,7 +43,7 @@ It is important to understand the ConditionData Schema
 ConditionData schema:
 ```javascript
 { 
-  op: “eq” | “and” | “or” | “ne” | “startsWith” , // operators that are allow
+  op: “eq” | “and” | “or” | “ne” | “containsString” , // operators that are allow
   args: [ <ConditionData> | <Value> | <Argument > ] // The arguments of the operators, it can be a value and argument or another condition (for example when the op is and)
 }
 ```
@@ -64,10 +65,14 @@ Argument Schema:
 }
 ```
 
+__Example 1__
+ - The Condition:
+	
+	```[arg1 isEqual:@"rollout.io"]```
+ - In pesudo code can look like this:
 
-For example for this condition: ```equals(arg1, “rollout.io”)```
-
-The model will look like this:
+	 ```equals(arg1, “rollout.io”)```
+- The model will look like this:
 ```javascript
 { 
   name:”first example - simple eq operator”, 
@@ -79,9 +84,15 @@ The model will look like this:
 }
 ``` 
  
-For example for this condition 
-	`arg1 not-equal  “rollout.io” &&  arg1 startsWith “ro”`
-The fetched model will look like this:
+__Example 2__
+ - The Condition:
+	
+	```[arg1 isEquals: @"rollout.io"] && [arg1 containsString: @"ro"]```
+ - In pesudo code can look like this:
+	
+	```and(equals(arg1, @"rollout.io"), constainsString(arg1, @"ro"))```
+ 
+- The fetched model will look like this:
 ```javascript
 { 
 	name:”second example - and operator”, 
@@ -92,7 +103,7 @@ The fetched model will look like this:
 				op: “ne”,
 				args: [{ type: “argument”, argumentNumber:1}, {type: “string”, value: “rollout.io”}]
 			},{
-				op: “startsWith”,
+				op: “containsString”,
 				args: [{ type: “argument”, argumentNumber:1}, {type: “string”, value: “ro”}]
 			}
 		],
@@ -100,8 +111,15 @@ The fetched model will look like this:
 }
 ``` 
  
-For example for this condition ```arg1 equals “rollout.io” &&  arg2 equals “control your production”``` 
-The fetched model will look like this:
+__Example 3__
+ - The Condition 
+
+	```[arg1 isEqaul: @“rollout.io”] &&  [arg2 isEqual: @“control your production”]``` 
+ - Or in pesudo code can look like this:
+	
+	```and(equals(arg1, “rollout.io”), equals(arg2,   @“control your production”)``` 
+ 
+- The fetched model will look like this:
 ```javascript
 { 
   name:”third example - 2 arguments”, 
