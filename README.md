@@ -87,7 +87,7 @@ __Example 1__
 __Example 2__
  - The Condition:
 	
-	```[arg1 isEquals: @"rollout.io"] && [arg1 containsString: @"ro"]```
+	```[arg1 isEqual: @"rollout.io"] && [arg1 containsString: @"ro"]```
  - In pesudo code can look like this:
 	
 	```and(equals(arg1, @"rollout.io"), constainsString(arg1, @"ro"))```
@@ -114,7 +114,7 @@ __Example 2__
 __Example 3__
  - The Condition 
 
-	```[arg1 isEqaul: @“rollout.io”] &&  [arg2 isEqual: @“control your production”]``` 
+	```[arg1 isEqual: @“rollout.io”] &&  [arg2 isEqual: @“control your production”]``` 
  - Or in pesudo code can look like this:
 	
 	```and(equals(arg1, “rollout.io”), equals(arg2,   @“control your production”)``` 
