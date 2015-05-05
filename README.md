@@ -38,13 +38,16 @@ __Notes__:
 
 
 __Schemas__:
-It is important to understand the ConditionData Schema
 
 ConditionData schema:
 ```javascript
 { 
-  op: “eq” | “and” | “or” | “ne” | “containsString” , // operators that are allow
-  args: [ <ConditionData> | <Value> | <Argument > ] // The arguments of the operators, it can be a value and argument or another condition (for example when the op is and)
+   // op decralres the type of the condition
+  op: “eq” | “and” | “or” | “ne” | “containsString” ,
+  // The arguments of the operators, it can be a value and argument or another condition depending on the op
+  // When the op is "eq" the args can be Value or Argument - [arg1 isEqaul @"something"] 
+  // When the op is "and" the args must be ConditionData - condition2 && condition2 && condition3
+  args: [ <ConditionData> | <Value> | <Argument > ] 
 }
 ```
       
