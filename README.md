@@ -43,8 +43,9 @@ __Schemas__:
 ConditionData schema:
 ```javascript
 { 
-   // op decralres the type of the condition
+   // op decralres the type of the condition:
   "op": "eq" | "and" | "or" | "ne" | "containsString",
+  
   // The arguments of the operators, it can be a value and argument or another condition depending on the op
   // When the op is "eq" the args can be Value or Argument - [arg1 isEqual @"something"] 
   // When the op is "and" the args must be ConditionData - condition1 && condition2 && condition3
@@ -76,16 +77,17 @@ __Example 1__
  - In pesudocode it looks like this:
 
 	 ```equals(arg1, “rollout.io”)```
-- The model will look like this:
-```javascript
-{ 
-  "name":"first example - simple eq operator",
-  "_id":"1", 
-  "condition": {
-    "op": "eq", 
-    "args":  [{ "type": "argument", "argumentNumber": 1}, {"type": "string", "value": "rollout.io"}]
-  }
-}
+ - The model will look like this:
+
+	```javascript
+	{ 
+	  "name":"first example - simple eq operator",
+  	  "_id":"1", 
+  	  "condition": {
+    	    "op": "eq", 
+    	    "args":  [{ "type": "argument", "argumentNumber": 1}, {"type": "string", "value": "rollout.io"}]
+  	  }
+	}
 ``` 
  
 __Example 2__
