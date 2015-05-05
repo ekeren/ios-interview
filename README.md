@@ -43,7 +43,7 @@ ConditionData schema:
 ```javascript
 { 
   op: “eq” | “and” | “or” | “ne” | “startsWith” , // operators that are allow
-  args: [ <ConditionData | Value | Argument > ] // The arguments of the operators, it can be a value and argument or another condition (for example when the op is and)
+  args: [ <ConditionData> | <Value> | <Argument > ] // The arguments of the operators, it can be a value and argument or another condition (for example when the op is and)
 }
 ```
       
@@ -52,7 +52,7 @@ Value Schema:
 ```javascript
 {
   type: ”string”,
-  date: “data"
+  date: String // e.g. “just some text"
 }
 ```
 
@@ -60,7 +60,7 @@ Argument Schema:
 ```javascript
 {
   type: ”argument”,
-  argumentNumber: 1|2
+  argumentNumber: 1|2 // the actual argument 
 }
 ```
 
