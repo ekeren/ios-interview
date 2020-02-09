@@ -125,6 +125,7 @@ __Example 3__
 	
 	```and(equals(arg1, "rollout.io"), equals(arg2,   @"control your production")``` 
  
+ 
 - The fetched model will look like this:
 ```javascript
 { 
